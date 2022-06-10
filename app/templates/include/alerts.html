@@ -1,0 +1,121 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </symbol>
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </symbol>
+  </svg>
+{% if alert %} 
+  {% if alert.info %}
+  <div class="alert alert-primary d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+    <div>
+        {{ alert.info }}
+    </div>
+  </div>
+  {% elif alert.success %}
+  <div class="alert alert-success d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+    <div>
+        {{ alert.success }}
+    </div>
+  </div>
+  {% elif alert.warning %}
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+        {{ alert.warning }}
+    </div>
+  </div>
+  {% elif alert.danger %}
+  <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+      {{ alert.danger }}
+    </div>
+  </div>
+  {% endif %}
+{% endif %}
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-2" style="z-index: 11">
+  
+  <!-- Info Toast Alert -->
+  <div id="infoToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header text-info">
+      <svg class="bi flex-shrink-0 me-2" width="12" height="12" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+      <strong class="me-auto", id="info-toastHeader">Bootstrap</strong>
+      <small id="info-toastSmall">11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div id="info-toastBody" class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+
+  <!-- Success Toast Alert -->
+  <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header text-success">
+      <svg class="bi flex-shrink-0 me-2" width="12" height="12" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+      <strong class="me-auto", id="success-toastHeader">Bootstrap</strong>
+      <small id="success-toastSmall">11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <p id="success-toastBody" class="toast-body">
+      Hello, world! This is a toast message.
+    </p>
+  </div>
+
+  <!-- Warning Toast Alert -->
+  <div id="warningToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header text-warning">
+      <svg class="bi flex-shrink-0 me-2" width="12" height="12" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+      <strong class="me-auto", id="warning-toastHeader">Bootstrap</strong>
+      <small id="warning-toastSmall">11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div id="warning-toastBody" class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+
+  <!-- Danger Toast Alert -->
+  <div id="dangerToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header text-danger">
+      <svg class="bi flex-shrink-0 me-2" width="12" height="12" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+      <strong class="me-auto", id="danger-toastHeader">Bootstrap</strong>
+      <small id="danger-toastSmall">11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div id="danger-toastBody" class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+
+</div>
+<script>
+  
+  function toastNotification(type="info", header="Notify", subHeader="", toastBody=""){
+    if (type=="success") {
+      var toast = document.getElementById('successToast')
+    }else if (type=='warning'){
+      var toast = document.getElementById('warningToast')
+    }else if (type=='danger'){
+      var toast = document.getElementById('dangerToast')
+    }else {
+      var toast = document.getElementById('infoToast')
+      type = 'info'
+    }
+    if (toast){
+      toast = new bootstrap.Toast(toast)
+      document.getElementById(type+'-toastHeader').innerText = header
+      document.getElementById(type+'-toastSmall').innerText = subHeader
+      document.getElementById(type+'-toastBody').innerText = toastBody
+      toast.show()
+    }
+  }
+
+</script>

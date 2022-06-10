@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>{{ title or 'Home' }}</title>
+    {% include 'include/links.html' %}
+    
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+
+    {% include 'include/nav.html' %}
+    <section>
+        <div class="container mt-5">
+            <div id="preloader"></div>
+            <main id='main'>
+                {% include 'include/alerts.html' %}
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </section>
+
+    {% include 'include/scripts.html' %}
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

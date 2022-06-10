@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+<section>
+  <div class="container mt-5">
+    <button class="btn btn-success" onclick='toastNotification(
+      type="success", 
+      header="Success", 
+      subHeader="now", 
+      toastBody="Message")'>
+      Success Toast
+    </button>
+    <button class="btn btn-warning" onclick="toastNotification(
+      type='warning', 
+      header='Warning', 
+      subHeader='now', 
+      toastBody='You did it!')">
+      Warning Toast
+    </button>
+    <button class="btn btn-danger" onclick="toastNotification(
+    type='danger', 
+    header='Danger!', 
+    subHeader='now', 
+    toastBody='You did it!')">
+      Danger Toast
+    </button>
+    <button class="btn btn-info" onclick="toastNotification(
+  type='info', 
+  header='Info', 
+  subHeader='now', 
+  toastBody='You did it!')">
+      Info Toast
+    </button>
+
+  </div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">Brand</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Something
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('something.awesome') }}">Awesome</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Nothing
+                                </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#link2">Link 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#link3">Link 3</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#link4">Link 4</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item" id="sign-out"><a class="nav-link {{ 'active' if active_page == 'logout' else '' }}"
+                        href="{{ url_for('main.logout') }}">Sign Out</a></li>
+                {% else %}
+                <li class="nav-item" id="sign-in"><a class="nav-link {{ 'active' if active_page == 'login' else '' }}"
+                        href="{{ url_for('main.login') }}">Sign In / Register</a></li>
+                {% endif %}
+            </ul>
+            <!-- <span class="navbar-text">
+          Navbar text with an inline element
+        </span> -->
+        </div>
+    </div>
+</nav>

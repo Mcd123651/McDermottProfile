@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% set active_page = "login" %}
+
+{% block content %}
+
+<section class="section">
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+</section>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
+<script>
+    var firebaseconfig = {
+        apiKey: "{{ FIREBASE_CREDENTIALS.apiKey }}",
+        authDomain: "{{ FIREBASE_CREDENTIALS.authDomain }}"
+    };
+    firebase.initializeApp(firebaseconfig);
+
+
+    // Google OAuth Client ID, needed to support One-tap sign-up.
+    // Set to null if One-tap sign-up is not supported.
+    var CLIENT_ID = '{{ GOOGLE_CLIENT_ID }}';
+</script>
+
+<script src="{{ url_for('static',filename='js/auth.js') }}"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css" />
+<script>
+var uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        console.log(authResult);
+        currentUser = JSON.stringify(authResult.user.toJSON());
+        console.log(currentUser);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/login", false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        xhr.send(currentUser);
+        console.log('post response ='+xhr.responseText);
+        return true;
+      },
+      uiShown: function() {
+        // The widget is rendered.
+        // Hide the loader.
+        document.getElementById('loader').style.display = 'none';
+      }
+    },
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    signInFlow: 'popup',
+    signInSuccessUrl: '{{ next }}',
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    //   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    //   firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    //   firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.PhoneAuthProvider.PROVIDER_ID
+    ],
+    // Terms of service url.
+    tosUrl: '<your-tos-url>',
+    // Privacy policy url.
+    privacyPolicyUrl: '<your-privacy-policy-url>'
+  };
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    // The start method will wait until the DOM is loaded to include the FirebaseUI sign-in widget
+    // within the element corresponding to the selector specified.
+    ui.start('#firebaseui-auth-container', uiConfig);
+</script>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
