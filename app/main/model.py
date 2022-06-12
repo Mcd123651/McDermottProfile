@@ -31,7 +31,7 @@ class User:
         self.access_token = data['stsTokenManager']['accessToken']
         self.expiration_time = data['stsTokenManager']['expirationTime']
         self.update_db()
-        # self.read_db()
+        self.read_profile()
 
     def update_db(self):
         data = {
@@ -43,10 +43,23 @@ class User:
         fire_client.collection(u'users').document(self.uid).set(data, merge=True)
 
 
-    def read_db(self):
+    def read_profile(self):
         users_ref = fire_client.collection(u'users').document(self.uid)
         doc = users_ref.get()
-        print(f'{doc.id} => {doc.to_dict()}')
+        data = doc.to_dict()
+        self.first_name = data.get('firstName') or ''
+        self.last_name = data.get('lastName') or ''
+        self.contact_email = data.get('contactEmail') or ''
+        self.phone = data.get('phone') or ''
+    
+    def save_profile(self):
+        data = {
+            'firstName': self.first_name,
+            'lastName': self.last_name,
+            'contactEmail': self.contact_email,
+            'phone': self.phone            
+        }
+        fire_client.collection(u'users').document(self.uid).set(data, merge=True)
 
     def get_user(data):
         try:

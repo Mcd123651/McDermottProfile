@@ -20,8 +20,6 @@ FIREBASE_CREDENTIALS = {
     "measurementId": environ.get('MEAUREMENT_ID'),
 }
 
-GOOGLE_CLIENT_ID = environ.get('GOOGLE_CLIENT_ID')
-
 DOMAIN_NAME = environ.get('DOMAIN_NAME')
 
 def create_app():
