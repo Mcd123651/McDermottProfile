@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% set active_page = "home" %}
 {% block styles %}
-
+<style>
+.email {font-size: 1rem}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -39,7 +41,7 @@
       </h1>
       <div class="subheading mb-5 p-2">
         (267) 688-7117 · 
-        <a href="mailto:matt.s.mcdermott@gmail.com">matt.s.mcdermott@gmail.com</a>
+        <a class="email" href="mailto:matt.s.mcdermott@gmail.com"; size="+2">matt.s.mcdermott@gmail.com</a>
       </div>
       <!-- About Section Loop -->
       {% for result in about_list %}
