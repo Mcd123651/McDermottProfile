@@ -4,17 +4,60 @@ from firebase_admin import firestore
 from datetime import datetime as dt, timedelta as td
 import json
 from app.config import FIREBASE_CREDENTIALS
-
+from firebase_admin import credentials
 
 
 #initialize firebase
-auth = Firebase(FIREBASE_CREDENTIALS).auth()
-db = Firebase(FIREBASE_CREDENTIALS).database()
-fire_app = firebase_admin.initialize_app(options=FIREBASE_CREDENTIALS)
+cred = credentials.Certificate("creds.json")
+fire_app = firebase_admin.initialize_app(cred)
 fire_client = firestore.client(fire_app)
 
 
+class AboutDoc:
+    def __init__(self,doc):
+        self.text = doc['text']
 
+class AboutDocList:
+    def __init__(self):
+        self.about_list = []
+        collection_about = fire_client.collection(u'about').get()
+        for collection_doc in collection_about:
+            doc = fire_client.collection(u'about').document(collection_doc.id).get().to_dict()
+            self.about_list.append(AboutDoc(doc))
+
+class ExpDoc:
+    def __init__(self,id,doc):
+        self.id = id
+        self.position = doc['position']
+        self.company = doc['company']
+        self.startperiod = doc['startperiod']
+        self.endperiod = doc['endperiod']
+        self.text = []
+        for  docitem in doc['text']:
+            self.text.append(docitem)
+
+class ExpDocList:
+    def __init__(self):
+        self.exp_list = []
+        collection_exp = fire_client.collection(u'experience').get()
+        for collection_doc in collection_exp:
+            doc = fire_client.collection(u'experience').document(collection_doc.id).get().to_dict()
+            self.exp_list.append(ExpDoc(collection_doc.id,doc))
+        self.exp_list.sort(key=lambda x: x.id, reverse=False)
+
+class SkillDoc:
+    def __init__(self,id,doc):
+        self.title = id
+        self.icon = doc['icon']
+
+class SkillDocList:
+    def __init__(self):
+        self.skill_list = []
+        collection_skill = fire_client.collection(u'skills').get()
+        for collection_doc in collection_skill:
+            doc = fire_client.collection(u'skills').document(collection_doc.id).get().to_dict()
+            self.skill_list.append(SkillDoc(collection_doc.id,doc))
+        #self.skill_list.sort(key=lambda x: x.id, reverse=False)
 
 
 class User:
