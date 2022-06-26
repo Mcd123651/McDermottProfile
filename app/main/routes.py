@@ -3,15 +3,22 @@ from is_safe_url import is_safe_url
 from flask_login import login_user, current_user, logout_user, login_required
 from firebase_admin import auth as admin_auth
 from app.config import login_manager, FIREBASE_CREDENTIALS, DOMAIN_NAME
-from app.main.model import User
+from app.main.model import AboutDocList, ExpDocList, SkillDocList
 from app.main.forms import ProfileForm
 from time import sleep
 main = Blueprint('main', __name__)
 
+
+
+
 @main.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',about_list = AboutDocList().about_list, exp_list = ExpDocList().exp_list, skill_list = SkillDocList().skill_list)
 
+
+@main.route('/company')
+def company():
+    return render_template('cards/company.html')
 
 
 #Login
@@ -31,7 +38,7 @@ def login():
             return redirect(url_for('main.index'))
     next = request.args.get('next')
     if next:
-        if not is_safe_url(next,('127.0.0.1','localhost',DOMAIN_NAME)):
+        if not is_safe_url(next,('localhost','127.0.0.1',DOMAIN_NAME)):
             return abort(400)
     else:
         next = '/'
