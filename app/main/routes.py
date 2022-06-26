@@ -3,7 +3,7 @@ from is_safe_url import is_safe_url
 from flask_login import login_user, current_user, logout_user, login_required
 from firebase_admin import auth as admin_auth
 from app.config import login_manager, FIREBASE_CREDENTIALS, DOMAIN_NAME
-from app.main.model import AboutDocList, ExpDocList, SkillDocList
+from app.main.model import AboutDocList, ExpDocList, SkillDocList, AwardDocList, EdDocList
 from app.main.forms import ProfileForm
 from time import sleep
 main = Blueprint('main', __name__)
@@ -13,7 +13,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index.html',about_list = AboutDocList().about_list, exp_list = ExpDocList().exp_list, skill_list = SkillDocList().skill_list)
+    return render_template('index.html',about_list = AboutDocList().about_list, exp_list = ExpDocList().exp_list, skill_list = SkillDocList().skill_list, award_list = AwardDocList().award_list, ed_list = EdDocList().ed_list)
 
 
 @main.route('/company')

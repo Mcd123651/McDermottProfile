@@ -57,8 +57,42 @@ class SkillDocList:
         for collection_doc in collection_skill:
             doc = fire_client.collection(u'skills').document(collection_doc.id).get().to_dict()
             self.skill_list.append(SkillDoc(collection_doc.id,doc))
-        #self.skill_list.sort(key=lambda x: x.id, reverse=False)
 
+class AwardDoc:
+    def __init__(self,id,doc):
+        self.id = id
+        self.title = doc['title']
+        self.subtitle = doc['subtitle']
+        self.link = doc['link']
+
+class AwardDocList:
+    def __init__(self):
+        self.award_list = []
+        collection_award = fire_client.collection(u'awards').get()
+        for collection_doc in collection_award:
+            doc = fire_client.collection(u'awards').document(collection_doc.id).get().to_dict()
+            self.award_list.append(AwardDoc(collection_doc.id,doc))
+        self.award_list.sort(key=lambda x: x.id, reverse=False)
+
+class EdDoc:
+    def __init__(self,id,doc):
+        self.id = id
+        self.degree = doc['degree']
+        self.school = doc['school']
+        self.startperiod = doc['startperiod']
+        self.endperiod = doc['endperiod']
+        # self.text = []
+        # for  docitem in doc['text']:
+        #     self.text.append(docitem)
+
+class EdDocList:
+    def __init__(self):
+        self.ed_list = []
+        collection_ed = fire_client.collection(u'education').get()
+        for collection_doc in collection_ed:
+            doc = fire_client.collection(u'education').document(collection_doc.id).get().to_dict()
+            self.ed_list.append(EdDoc(collection_doc.id,doc))
+        self.ed_list.sort(key=lambda x: x.id, reverse=False)
 
 class User:
     def __init__(self, data):
